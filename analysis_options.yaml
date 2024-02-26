@@ -1,0 +1,25 @@
+# Analysis options specific to a Dart package using dart:lint.
+
+# Lint rules configuration.
+linter:
+  rules:
+    # Example rules from dart:lint:
+    - camel_case_types
+    - constant_identifier_names
+    - prefer_single_quotes
+    - prefer_typing_uninitialized_variables
+    - sort_child_properties_last
+    - sort_constructors_first
+    - always_declare_return_types
+
+# Style guide configuration.
+analyzer:
+  exclude:
+    # - "test/**"  # Exclude test directory from analysis
+    # - "example/**"  # Exclude example directory from analysis
+  errors:
+    # Example error settings:
+    unused_local_variable: warning
+    unused_import: warning
+    unused_element: warning
+    prefer_single_quotes: warning
