@@ -1,39 +1,63 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Easy Resend
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+A Dart package for easy integration with the Easy Resend API to send emails with attachments.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+## Installation
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Add the following dependency to your `pubspec.yaml`:
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```yaml
+dependencies:
+  easy_resend: ^1.0.0
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
 ```dart
-const like = 'sample';
+import 'package:easy_resend/easy_resend.dart';
+import 'package:easy_resend/src/models/attachment.dart';
+
+void main() async {
+  // Initialize EasyResend with your API key
+  EasyResend.initialize('your_api_key_here');
+
+  // Create an instance of EasyResend
+  final easyResend = EasyResend.getInstance();
+
+  // Prepare email data
+  final from = 'sender@example.com';
+  final to = ['recipient1@example.com', 'recipient2@example.com'];
+  final subject = 'Test Email';
+  final text = 'This is a test email sent using Easy Resend.';
+  final attachments = [
+    Attachment(filename: 'invoice.pdf', content: Uint8List.fromList([])),
+    Attachment(filename: 'image.jpg', content: Uint8List.fromList([])),
+  ];
+
+  try {
+    // Send the email
+    final id = await easyResend.sendEmail(
+      from: from,
+      to: to,
+      subject: subject,
+      text: text,
+      attachments: attachments,
+    );
+
+    print('Email sent successfully! ID: $id');
+  } catch (e) {
+    print('Failed to send email: $e');
+  }
+}
 ```
 
-## Additional information
+Replace `'your_api_key_here'` with your actual API key. You can also customize the email data according to your requirements.
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+## Features
+
+- Send emails with attachments using the Easy Resend API.
+- Handle error responses gracefully.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

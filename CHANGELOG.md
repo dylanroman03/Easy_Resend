@@ -1,3 +1,3 @@
 ## 1.0.0
 
-- Initial version.
+- First Version, Send emails with attachments, bcc, cc, html.
