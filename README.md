@@ -8,7 +8,7 @@ Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  easy_resend: ^1.0.0
+  easy_resend: ^1.0.2
 ```
 
 ## Usage

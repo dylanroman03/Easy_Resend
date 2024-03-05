@@ -5,3 +5,7 @@
 # 1.0.1
 
 - Updating Topics.
+
+# 1.0.2
+
+- Using sdk ^2.19.0
