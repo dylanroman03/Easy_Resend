@@ -1,6 +1,6 @@
 name: easy_resend
 description: A Dart package for easy integration with the Easy Resend API to send emails with attachments.
-version: 1.0.2
+version: 1.0.3
 repository: https://github.com/dylanroman03/Easy_Resend
 
 environment:

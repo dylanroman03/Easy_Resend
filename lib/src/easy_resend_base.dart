@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:easy_resend/src/constants.dart';
 import 'package:easy_resend/src/models/attachment.dart';
-import 'package:easy_resend/src/models/errorResponse.dart';
-import 'package:http/http.dart' as http;
+import 'package:easy_resend/src/models/email.dart';
+import 'package:easy_resend/src/models/email_to_batch.dart';
+import 'package:easy_resend/src/service/easy_resend_email.dart';
 
 /// A class for sending emails by Resend.
 class EasyResend {
@@ -61,7 +59,7 @@ class EasyResend {
     List<String> cc = const [],
     String? html,
   }) async {
-    Map<String, dynamic> body = {
+    Email email = Email.fromMap({
       'from': from,
       'to': to,
       'subject': subject,
@@ -70,24 +68,16 @@ class EasyResend {
       if (bcc.isNotEmpty) 'bcc': bcc,
       if (cc.isNotEmpty) 'cc': cc,
       if (html != null) 'html': html,
-    };
+    });
 
-    final http.Response response = await http.post(
-      Uri.parse(urlEmails),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $_apiKey',
-      },
-      body: jsonEncode(body),
-    );
-    if (response.statusCode == 200) {
-      String body = response.body;
+    return await EasyResendEmail(apiKey: _apiKey).sendEmail(email);
+  }
 
-      Map<String, dynamic> bodyMap = jsonDecode(body);
-      return bodyMap['id']!;
-    } else {
-      final error = ErrorResponse.fromMap(jsonDecode(response.body));
-      throw error.returnMessage();
-    }
+  Future<Email> retriveEmail(String id) async {
+    return await EasyResendEmail(apiKey: _apiKey).retriveEmail(id);
+  }
+
+  Future<List<String>> sendBatch(List<EmailToBach> emails) async {
+    return await EasyResendEmail(apiKey: _apiKey).sendBatch(emails);
   }
 }
